@@ -1,4 +1,5 @@
-# Dummy Website for learning Full-Stack Web Development with Flask
+# Universal Tech Academy
+This is a dummy website for learning Full-Stack Web Development with Flask.
 
 ## Set up virtual environment
 ```Bash
@@ -44,4 +45,4 @@ http://domain.com/home
 
 
 Source:
-- [full stack web development with flask](linkedin.com/learning/full-stack-web-development-with-flask/)
+- [full stack web development with flask (LinkedIn)](linkedin.com/learning/full-stack-web-development-with-flask/)
