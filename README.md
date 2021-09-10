@@ -1,6 +1,13 @@
 # Universal Tech Academy
 This is a dummy website for learning Full-Stack Web Development with Flask.
 
+## Main Topics
+- Flask
+- HTML
+- CSS
+- Jinja
+- JSON
+
 ## Set up virtual environment
 ```Bash
 sudo apt install python3.8-venv
@@ -42,7 +49,6 @@ http://domain.com/home
 {# ... #} - Comments
 ```
 - The `if` statement in Jinja
-
 
 ## Source:
 - [full stack web development with flask (LinkedIn)](linkedin.com/learning/full-stack-web-development-with-flask/)
