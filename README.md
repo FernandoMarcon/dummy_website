@@ -78,6 +78,11 @@ class flask.Response(
 ### Databases
 #### mongoDB
 [Installation](https://www.mongodb.com/)
+```Bash
+sudo systemctl start mongod
+mongoimport --jsonArray --db UTF_Enrollment --collection courses  --file models/courses.json
+mongoimport --jsonArray --db UTF_Enrollment --collection users  --file models/users.json
+```
 
 Setting up a mongoDB database
 ```
