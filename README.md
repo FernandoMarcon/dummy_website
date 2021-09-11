@@ -80,8 +80,8 @@ class flask.Response(
 [Installation](https://www.mongodb.com/)
 ```Bash
 sudo systemctl start mongod
-mongoimport --jsonArray --db UTF_Enrollment --collection courses  --file models/courses.json
-mongoimport --jsonArray --db UTF_Enrollment --collection users  --file models/users.json
+mongoimport --jsonArray --db UTA_Enrollment --collection courses  --file models/courses.json
+mongoimport --jsonArray --db UTA_Enrollment --collection user  --file models/user.json
 ```
 
 Setting up a mongoDB database
@@ -99,6 +99,48 @@ Initializing the database object
 db = MongoEngine()
 db.init_app(app)
 ```
+
+#### Flask-WTF Extension
+- Flask-WTF is an extension for the WTForms library
+- WTForms provides a clean way to generate HTML form fields
+- Maintain a separation of code and presentation
+
+```html
+<form>
+{{ form.hidden_tag() }}
+{{ form.username }}
+{{ form.email }}
+{{ form.password }}
+<\form>
+```
+- Provides common security and authentication features:
+  - Session-based authentication
+  - Password hashing
+  - Basic HTTP and token-based authentications
+  - User registration
+  - Login tracking (Flask-Login)
+
+- Supports data persistancy for Flask-SQLAlchemy, Flask-MongoEngine, flask-peewee, and PonyORM
+
+### Sessions
+#### State management and User Authentication using **Flask-Session**
+- The **session** object stores information specific to a user
+- Implementation on top of cookies and signs cookies cryptographically
+
+```Python
+session['jey'] = value   # setting a session
+session.get('key')       # getting a session
+
+session.pop('key',None)   # destroying a session
+session['key']= False     # destroying a session
+```
+#### Flask-Login Extension
+- Sessions and state management using Flask-Login extension
+- Managing user logged-in state using a user-loader() function
+- Using the LoginManager class to manage login state
+- Implementing the "remember me" feature
+- Restricting access to protected pages with @login_required
+- Logging out users using the logout_user() function
 
 ## Source:
 - [Full-Stack Web Development with Flask (LinkedIn)](linkedin.com/learning/full-stack-web-development-with-flask/)
