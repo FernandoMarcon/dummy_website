@@ -1,5 +1,5 @@
 from application import app, db
-from flask import render_template, request, json, Response, redirect, flash, url_for, session
+from flask import render_template, request, json, jsonify, Response, redirect, flash, url_for, session
 from application.models import User, Course, Enrollment
 from application.forms import LoginForm, RegistrationForm
 
@@ -7,8 +7,17 @@ courseData = [{"courseID":"1111","title":"PHP 111","description":"Intro to PHP",
 
 ###################################################
 
-@api.rout('/api')
-
+# @api.route('/api','/api/')
+# class GetAndPost(Resource):
+#
+#     def get(self):
+#         return jsonify(User.objects.all())
+#
+# @api.route('/api/<idx>')
+# class GetUpdateDelete(Resource):
+#
+#     def get(self,idx):
+#         return jsonify(User.objects(user_id=idx))
 
 ###################################################
 
@@ -84,6 +93,7 @@ def enrollment():
     courseID    = request.form.get('courseID')
     courseTitle = request.form.get('title')
     user_id = session.get('user_id')
+    user_id = 1
 
     if courseID:
         if Enrollment.objects(user_id=user_id, courseID=courseID):
@@ -94,53 +104,53 @@ def enrollment():
             flash(f"You are enrolled in {courseTitle}", "success")
 
     classes = list( User.objects.aggregate(*[
-            {
-                '$lookup': {
-                    'from': 'enrollment',
-                    'localField': 'user_id',
-                    'foreignField': 'user_id',
-                    'as': 'r1'
+                {
+                    '$lookup': {
+                        'from': 'enrollment',
+                        'localField': 'id',
+                        'foreignField': 'user_id',
+                        'as': 'r1'
+                    }
+                }, {
+                    '$unwind': {
+                        'path': '$r1',
+                        'includeArrayIndex': 'r1_id',
+                        'preserveNullAndEmptyArrays': False
+                    }
+                }, {
+                    '$lookup': {
+                        'from': 'course',
+                        'localField': 'r1.courseID',
+                        'foreignField': 'courseID',
+                        'as': 'r2'
+                    }
+                }, {
+                    '$unwind': {
+                        'path': '$r2',
+                        'preserveNullAndEmptyArrays': False
+                    }
+                }, {
+                    '$match': {
+                        'id': user_id
+                    }
+                }, {
+                    '$sort': {
+                        'courseID': 1
+                    }
                 }
-            }, {
-                '$unwind': {
-                    'path': '$r1',
-                    'includeArrayIndex': 'r1_id',
-                    'preserveNullAndEmptyArrays': False
-                }
-            }, {
-                '$lookup': {
-                    'from': 'course',
-                    'localField': 'r1.courseID',
-                    'foreignField': 'courseID',
-                    'as': 'r2'
-                }
-            }, {
-                '$unwind': {
-                    'path': '$r2',
-                    'preserveNullAndEmptyArrays': False
-                }
-            }, {
-                '$match': {
-                    'user_id': user_id
-                }
-            }, {
-                '$sort': {
-                    'courseID': 1
-                }
-            }
-        ]))
+            ]))
 
-    term  = request.form.get('term')
+    # term  = request.form.get('term')
     return render_template('enrollment.html', enrollment=True, title="Enrollment", classes=classes)
 
-@app.route('/api/')
-@app.route('/api/<idx>')
-def api(idx=None):
-    if idx==None:
-        jdata = courseData
-    else:
-        jdata = courseData[int(idx)]
-    return Response(json.dumps(jdata), mimetype="application/json")
+# @app.route('/api/')
+# @app.route('/api/<idx>')
+# def api(idx=None):
+#     if idx==None:
+#         jdata = courseData
+#     else:
+#         jdata = courseData[int(idx)]
+#     return Response(json.dumps(jdata), mimetype="application/json")
 
 @app.route('/user')
 def user():

@@ -99,6 +99,13 @@ Initializing the database object
 db = MongoEngine()
 db.init_app(app)
 ```
+-  Exploring the MongoDB Aggregation framework using Compass interface
+-  Creating the aggregation pipeline to process data in three stages
+```
+$lookup: Performs a left outer join
+$match: Filters documents
+$unwind: Deconstructs an array field
+```
 
 #### Flask-WTF Extension
 - Flask-WTF is an extension for the WTForms library
