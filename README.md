@@ -142,7 +142,7 @@ session.pop('key',None)   # destroying a session
 session['key']= False     # destroying a session
 ```
 #### Flask-Login Extension
-- Sessions and state management using Flask-Login extension
+- Sessions and state management using [Flask-Login extension](flask-login.readthedocks.io/en/latest/)
 - Managing user logged-in state using a user-loader() function
 - Using the LoginManager class to manage login state
 - Implementing the "remember me" feature
